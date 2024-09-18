@@ -83,6 +83,7 @@ export async function runPrompt(
   endpoint: string,
   prompt: ComfyUIPrompt,
   callback: (progress: ComfyUIProgress) => void,
+  wsCallback: (ws: WebSocket) => void = () => {},
   useAsync = true
 ) {
   // 处理下 seed 字段
@@ -98,6 +99,8 @@ export async function runPrompt(
 
     try {
       const ws = new WebSocket(`${endpoint.replace('http', 'ws')}/api/run/ws`);
+      wsCallback(ws);
+      
       ws.onopen = () => {
         ws.send(JSON.stringify(prompt_with_seed));
       };
@@ -250,7 +253,7 @@ export async function imgeToImage(requestData: any, comfyUiMetaData: any, queueK
     }
   });
 
-  return await retry(`${DEFAULT_ENDPOINT_HASH}/api/run`, payload, queueKey);
+  return await retry(`${DEFAULT_ENDPOINT_HASH}`, payload, queueKey);
 }
 
 
