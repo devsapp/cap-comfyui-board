@@ -1,0 +1,109 @@
+/**
+ * 全局样式，用来覆盖excalidraw 的导航栏和侧边栏
+ *
+ */
+
+.cap-yunqi {
+    font-size: 16px;
+}
+
+.cap-yunqi .main-menu-trigger,
+.cap-yunqi .sidebar-trigger,
+.mobile-misc-tools-container,
+.cap-yunqi .help-icon {
+    visibility: hidden !important;
+}
+
+.cap-yunqi .App-toolbar__extra-tools-trigger {
+    display: none !important;
+}
+.HintViewer {
+    display: none !important;
+}
+.ToolIcon__lock,
+.App-menu__left,
+.App-toolbar__divider {
+    display: none !important;
+}
+label[title="Hand (panning tool) — H"],
+/* label[title="Selection — V or 1"], */
+label[title="Rectangle — R or 2"],
+label[title="Diamond — D or 3"] ,
+label[title="Ellipse — O or 4"],
+label[title="Arrow — A or 5"],
+label[title="Line — L or 6"],
+label[title="Insert image — 9"]
+/* label[title="Text — T or 8"]  */
+{
+    display: none !important;
+}
+
+
+.ToolIcon_type_button[aria-label="Edit"] {
+    display: none !important;
+}
+
+.App-bottom-bar {
+    position: absolute !important;
+    display: block;
+    margin: 0 !important;
+    padding: 0 !important;
+    right: 133px !important;
+    left: auto !important;
+    width: 80px;
+    top: 16px !important;
+    height: 44px;
+}
+.FixedSideContainer {
+    margin-right: 85px;
+}
+button[data-testid="main-menu-trigger"] {
+    display: none !important;
+}
+
+
+
+/* 小屏 */
+@media screen and (max-width: 991px) {
+    body {
+       overflow: hidden;
+    }
+    .FixedSideContainer {
+        margin-right: 100px;
+    }
+    .App-bottom-bar {
+        top: 8px !important;
+    }
+    .App-toolbar-content {
+        display: flex;
+        align-items: center;
+        height: 37px !important;
+    }
+    .cap-yunqi {
+        overflow: hidden !important;
+        padding-bottom: 40px;
+    }
+
+    label[title="Insert image — 9"] {
+        display: block !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .FixedSideContainer {
+        margin-right: 180px;
+    }
+    .App-bottom-bar {
+        top: 3px !important;
+        right: 126px !important;
+    }
+    .App-toolbar-content {
+        display: flex;
+        align-items: center;
+        height: 32px !important;
+    }
+    label[title="Insert image — 9"] {
+        display: block !important;
+    }
+}
+  

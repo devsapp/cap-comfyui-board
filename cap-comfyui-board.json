@@ -1,0 +1,398 @@
+{
+    "payload": {
+        "3": {
+            "inputs": {
+                "seed": 648227800398826,
+                "steps": 5,
+                "cfg": 1.5,
+                "sampler_name": "euler_ancestral",
+                "scheduler": "ddim_uniform",
+                "denoise": 1,
+                "model": [
+                    "4",
+                    0
+                ],
+                "positive": [
+                    "10",
+                    0
+                ],
+                "negative": [
+                    "7",
+                    0
+                ],
+                "latent_image": [
+                    "5",
+                    0
+                ]
+            },
+            "class_type": "KSampler",
+            "_meta": {
+                "title": "KSampler"
+            }
+        },
+        "4": {
+            "inputs": {
+                "ckpt_name": "sd_xl_turbo_1.0_fp16.safetensors"
+            },
+            "class_type": "CheckpointLoaderSimple",
+            "_meta": {
+                "title": "Load Checkpoint"
+            }
+        },
+        "5": {
+            "inputs": {
+                "width": 512,
+                "height": 512,
+                "batch_size": 1
+            },
+            "class_type": "EmptyLatentImage",
+            "_meta": {
+                "title": "Empty Latent Image"
+            }
+        },
+        "6": {
+            "inputs": {
+                "text": [
+                    "30",
+                    0
+                ],
+                "speak_and_recognation": true,
+                "clip": [
+                    "4",
+                    1
+                ]
+            },
+            "class_type": "CLIPTextEncode",
+            "_meta": {
+                "title": "CLIP Text Encode (Prompt)"
+            }
+        },
+        "7": {
+            "inputs": {
+                "text": "(worst quality, normal quality, low quality:1.5),(3d face:1.3),freckles,lowres,monochrome,grayscale,bad proportions,watermark,signature,text,curvy,plump,fat,muscular female,easynegative,nsfw,(logo:1.3),deformed,distorted,disfigured,poorly drawn,bad anatomy,wrong anatomy,excess parts,censored, holding, holding weapon, hold, no extra hands，EasyNegative, (worst quality, low quality:1.4), (depth of field, blurry:1.2),3D face, cropped, lowres, text, (nsfw:1.3),(worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, skin spots, acnes, skin blemishes, age spot, (ugly:1.331), (duplicate:1.331), (morbid:1.21), (mutilated:1.21), (tranny:1.331), mutated hands, (poorly drawn hands:1.5), blurry, (bad anatomy:1.21), (bad proportions:1.331), extra limbs, (disfigured:1.331), (missing arms:1.331), (extra legs:1.331), (fused fingers:1.61051), (too many fingers:1.61051), (unclear eyes:1.331), lowers, bad hands, missing fingers, extra digit, (((extra arms and legs))),,nsfw",
+                "speak_and_recognation": true,
+                "clip": [
+                    "4",
+                    1
+                ]
+            },
+            "class_type": "CLIPTextEncode"
+        },
+        "8": {
+            "inputs": {
+                "samples": [
+                    "3",
+                    0
+                ],
+                "vae": [
+                    "4",
+                    2
+                ]
+            },
+            "class_type": "VAEDecode",
+            "_meta": {
+                "title": "VAE Decode"
+            }
+        },
+        "9": {
+            "inputs": {
+                "filename_prefix": "ComfyUI",
+                "images": [
+                    "8",
+                    0
+                ]
+            },
+            "class_type": "SaveImage",
+            "_meta": {
+                "title": "Save Image"
+            }
+        },
+        "10": {
+            "inputs": {
+                "strength": 0.8,
+                "conditioning": [
+                    "6",
+                    0
+                ],
+                "control_net": [
+                    "11",
+                    0
+                ],
+                "image": [
+                    "13",
+                    0
+                ]
+            },
+            "class_type": "ControlNetApply",
+            "_meta": {
+                "title": "Apply ControlNet"
+            }
+        },
+        "11": {
+            "inputs": {
+                "control_net_name": "controlnet-canny-scribble-integrated-sdxl-v2-fp16.safetensors"
+            },
+            "class_type": "ControlNetLoader",
+            "_meta": {
+                "title": "Load ControlNet Model"
+            }
+        },
+        "13": {
+            "inputs": {
+                "resolution": 1024,
+                "image": [
+                    "14",
+                    0
+                ]
+            },
+            "class_type": "ScribblePreprocessor",
+            "_meta": {
+                "title": "Scribble Lines"
+            }
+        },
+        "14": {
+            "inputs": {
+                "image": "",
+                "update_node": true,
+                "Clear Canvas": "clear_painer"
+            },
+            "class_type": "LoadImage"
+        },
+        "27": {
+            "inputs": {
+                "from_translate": "chinese simplified",
+                "to_translate": "english",
+                "add_proxies": false,
+                "proxies": "",
+                "auth_data": "",
+                "service": "MyMemoryTranslator [free]",
+                "text": "兔子",
+                "Show proxy": "proxy_hide",
+                "Show authorization": "authorization_hide",
+                "speak_and_recognation": true
+            },
+            "class_type": "DeepTranslatorTextNode",
+            "_meta": {
+                "title": "Deep Translator Text Node"
+            }
+        },
+        "30": {
+            "inputs": {
+                "prompt1": [
+                    "27",
+                    0
+                ],
+                "prompt2": [
+                    "32",
+                    0
+                ],
+                "separator": ", "
+            },
+            "class_type": "easy promptConcat",
+            "_meta": {
+                "title": "PromptConcat"
+            }
+        },
+        "32": {
+            "inputs": {
+                "value": "cyberpunk"
+            },
+            "class_type": "easy string",
+            "_meta": {
+                "title": "String"
+            }
+        }
+    },
+    "params": [
+        {
+            "type": "image",
+            "id": "14",
+            "key": "image",
+            "title": "画布图片",
+            "description": "画布图片"
+        },
+        {
+            "type": "string",
+            "id": "32",
+            "key": "value",
+            "title": "风格",
+            "description": "风格",
+            "options": [
+                {
+                    "value": "Anime, 80s anime style, Ghibli",
+                    "label": "80年动漫",
+                    "profile": "https://img.alicdn.com/imgextra/i1/O1CN01hUIjby1hUkY4Yjje2_!!6000000004281-0-tps-768-768.jpg"
+                },
+                {
+                    "value": "pixel style",
+                    "label": "像素",
+                    "profile": "https://img.alicdn.com/imgextra/i1/O1CN01c0Uk4Z1EyPKyuWYru_!!6000000000420-0-tps-768-768.jpg"
+                },
+                {
+                    "value": "Pixar style, cute",
+                    "label": "皮克斯",
+                    "profile": "https://img.alicdn.com/imgextra/i3/O1CN01P4tAQr1gTXtFvRWwM_!!6000000004143-0-tps-768-768.jpg"
+                },
+                {
+                    "value": "by Hayao Miyazaki",
+                    "label": "宫崎骏",
+                    "profile": "https://img.alicdn.com/imgextra/i4/O1CN018eKm2g1nDF6UZNgqB_!!6000000005055-0-tps-512-512.jpg"
+                },
+                {
+                    "value": "Plush, 3D, three-dimensional, cute",
+                    "label": "毛绒玩具",
+                    "profile": "https://img.alicdn.com/imgextra/i3/O1CN01h8dCHF1wFNUYpG0PE_!!6000000006278-0-tps-768-768.jpg"
+                },
+                {
+                    "value": "comics, clean background",
+                    "label": "简笔画",
+                    "profile": "https://img.alicdn.com/imgextra/i1/O1CN010UwVH7289DYNU3UrH_!!6000000007889-0-tps-768-768.jpg"
+                },
+                {
+                    "value": "colored pencil style",
+                    "label": "彩铅",
+                    "profile": "https://img.alicdn.com/imgextra/i2/O1CN01bS6OkU1aMmLMnFPeh_!!6000000003316-0-tps-768-768.jpg"
+                },
+                {
+                    "value": "Chinese ink painting style",
+                    "label": "水墨画",
+                    "profile": "https://img.alicdn.com/imgextra/i4/O1CN01tdEMml1tdFHXya6KN_!!6000000005924-0-tps-768-768.jpg"
+                },
+                {
+                    "value": "van gogh, starry sky",
+                    "label": "梵高",
+                    "profile": "https://img.alicdn.com/imgextra/i2/O1CN01YdziTT1bkQPONKmlN_!!6000000003503-0-tps-768-768.jpg"
+                },
+                {
+                    "value": "watercolor, smudge",
+                    "label": "水彩",
+                    "profile": "https://img.alicdn.com/imgextra/i1/O1CN01vnbpWh1sQaj1OSnG6_!!6000000005761-0-tps-512-512.jpg"
+                },
+                {
+                    "value": "cyberpunk",
+                    "label": "赛博朋克",
+                    "profile": "https://img.alicdn.com/imgextra/i1/O1CN01n3ucc11Yu5vJ5LLZA_!!6000000003118-0-tps-512-512.jpg"
+                },
+                {
+                    "value": "cartoon",
+                    "label": "二次元",
+                    "profile": "https://img.alicdn.com/imgextra/i4/O1CN01cwbojI1dyHcjxdYKh_!!6000000003804-0-tps-512-512.jpg"
+                },
+                {
+                    "value": "Chinese style comics",
+                    "label": "中国风漫画",
+                    "profile": "https://img.alicdn.com/imgextra/i1/O1CN01LKi1Se1RDm0zlZ8DD_!!6000000002078-0-tps-512-512.jpg"
+                },
+                {
+                    "value": "Oil painting, Monet",
+                    "label": "油画",
+                    "profile": "https://img.alicdn.com/imgextra/i2/O1CN01rfetY61rapyCYJksr_!!6000000005648-0-tps-512-512.jpg"
+                },
+                {
+                    "value": "photography",
+                    "label": "摄影",
+                    "profile": "https://img.alicdn.com/imgextra/i3/O1CN01SGPkKG1pG6oTt48Bp_!!6000000005332-0-tps-512-512.jpg"
+                },
+                {
+                    "value": "children's picture books",
+                    "label": "儿童绘本",
+                    "profile": "https://img.alicdn.com/imgextra/i2/O1CN01QaZy5q1ZLZghWNCpk_!!6000000003178-0-tps-512-512.jpg"
+                }
+            ]
+        },
+        {
+            "type": "string",
+            "id": "27",
+            "key": "text",
+            "title": "提示词",
+            "description": "提示词"
+        },
+        {
+            "type": "number",
+            "id": "3",
+            "key": "seed",
+            "title": "seed",
+            "description": "seed",
+            "options": [
+                648227800398822,
+                648227800398823,
+                648227800398824,
+                648227800398826
+            ]
+        },
+        {
+            "type": "imgWidth",
+            "id": "13",
+            "key": "resolution",
+            "title": "图片宽/高",
+            "description": "图片宽/高",
+            "defaultValue": 1024
+        },
+        {
+            "type": "imgWidth",
+            "id": "5",
+            "key": "width",
+            "title": "图片宽",
+            "description": "图片宽",
+            "defaultValue": 1024
+        },
+        {
+            "type": "imgHeight",
+            "id": "5",
+            "key": "height",
+            "title": "图片高",
+            "description": "图片高",
+            "defaultValue": 1024
+        }
+    ],
+    "inspirations": [
+        {
+            "value": "https://img.alicdn.com/imgextra/i3/O1CN01WkQ1s11UpjgmHp2ZU_!!6000000002567-0-tps-1024-1024.jpg",
+            "label": "猫"
+        },
+        {
+            "value": "https://img.alicdn.com/imgextra/i4/O1CN01iuddVc1PmvAvfTOn1_!!6000000001884-0-tps-1024-1024.jpg",
+            "label": "兔子"
+        },
+        {
+            "value": "https://img.alicdn.com/imgextra/i2/O1CN01eKNihB1Gm9yjXfGvR_!!6000000000664-0-tps-1024-1024.jpg",
+            "label": "狗"
+        },
+        {
+            "value": "https://img.alicdn.com/imgextra/i3/O1CN01KLEdH81PvchkHxXcP_!!6000000001903-0-tps-4096-4096.jpg",
+            "label": "机器人"
+        },
+        {
+            "value": "https://img.alicdn.com/imgextra/i2/O1CN01qmi7Qt1OgDlmy9VoZ_!!6000000001734-0-tps-1024-1024.jpg",
+            "label": "房子"
+        },
+        {
+            "value": "https://img.alicdn.com/imgextra/i3/O1CN0120BkuU1YsGLAVY29S_!!6000000003114-0-tps-1024-1024.jpg",
+            "label": "帆船"
+        },
+        {
+            "value": "https://img.alicdn.com/imgextra/i1/O1CN01qPoB0s1RPDulmVoc3_!!6000000002103-0-tps-1024-1024.jpg",
+            "label": "小熊"
+        },
+        {
+            "value": "https://img.alicdn.com/imgextra/i2/O1CN01aKDWlR1ySJupAbw0b_!!6000000006577-0-tps-1024-1024.jpg",
+            "label": "女孩1"
+        },
+        {
+            "value": "https://img.alicdn.com/imgextra/i2/O1CN01xjjwPe1J4b9j2f7RE_!!6000000000975-0-tps-1024-1024.jpg",
+            "label": "女孩2"
+        },
+        {
+            "value": "https://img.alicdn.com/imgextra/i1/O1CN01kKgoRV1zgLf5LQf80_!!6000000006743-0-tps-1024-1024.jpg",
+            "label": "向日葵"
+        },
+        {
+            "value": "https://img.alicdn.com/imgextra/i2/O1CN01DhgYDg1x9FoDRGGT5_!!6000000006400-0-tps-1024-1024.jpg",
+            "label": "风景画1"
+        },
+        {
+            "value": "https://img.alicdn.com/imgextra/i4/O1CN011TM7fe29MmtzwLOKn_!!6000000008054-0-tps-1024-1024.jpg",
+            "label": "风景画2"
+        }
+    ]
+}

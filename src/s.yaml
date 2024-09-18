@@ -1,0 +1,89 @@
+edition: 3.0.0 #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
+name: fc-stable-diffusion
+access: '{{ access }}'
+vars:
+  region: '{{ region }}'
+  name: '{{ name }}'
+  # imageVersion: 'v1'
+  # imageUrl: 'registry.${vars.region}.aliyuncs.com/ohyee/fc-demo:fc-comfyui-board-${vars.imageVersion}'      
+
+
+resources:
+  comfyui:
+    component: model
+    actions:
+    props:
+      region: ${vars.region}
+      name: '${vars.name}__comfyui'
+      description: 'ComfyUI 函数'
+      modelConfig:
+        sourceType: custom-container
+
+      # 实例规格
+      timeout: 600
+      diskSize: 512
+      cpu: 8
+      memorySize: 32768
+      gpuConfig:
+        gpuMemorySize: 16384
+        gpuType: fc.gpu.tesla.1
+
+      # 运行时
+      runtime: custom-container
+      customContainerConfig:
+        port: 9000
+        # image: ${vars.imageUrl}
+        image: "registry.${vars.region}.aliyuncs.com/ohyee/fc-demo:fc-comfyui-board-v1"
+        instanceConcurrency: 1
+
+      environmentVariables:
+        USE_AGENT: 'true'
+
+      httpTrigger: auto
+
+  web:
+    component: fc3
+    actions:
+    props:
+      region: '${vars.region}'
+      functionName: '${vars.name}__web'
+      description: '应用入口页面'
+      timeout: 300
+      diskSize: 512
+      runtime: custom
+      cpu: 1
+      memorySize: 1024
+      instanceConcurrency: 100
+      code: web/dist
+      customRuntimeConfig:
+        port: 9000
+        command:
+          - node
+        args:
+          - index.js
+      environmentVariables:
+        ENDPOINT: '${resources.comfyui.info.urlInternet}'
+      customDomain:
+        protocol: "HTTP"
+        route:
+          path: "/*"
+          qualifier: "LATEST"
+        domainName: auto
+
+  # custom-domain:
+  #   component: fc3-domain
+  #   props: #  组件的属性值
+  #     region: ${vars.region}
+  #     domainName: auto
+  #     protocol: HTTP
+  #     routeConfig:
+  #       routes:
+  #         - functionName: ${resources.web.props.functionName}
+  #           methods:
+  #             - GET
+  #             - POST
+  #             - PUT
+  #             - DELETE
+  #             - OPTIONS
+  #           path: /*
+  #           qualifier: LATEST
